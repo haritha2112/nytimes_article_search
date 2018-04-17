@@ -17,6 +17,14 @@
       imgRequest.open('GET', `https://api.unsplash.com/search/photos?page=1&query=${searchedForText}`);
       imgRequest.setRequestHeader('Authorization', 'Client-ID b65dff736c9af6a5cf8bd401ee5d94b6cc83e19562e71bba71d8b004a8da7051');
       imgRequest.send();
+
+      const articleRequest = new XMLHttpRequest();
+      articleRequest.onload = addArticle;
+      articleRequest.onerror = function (err) {
+        requestError(err, 'article');
+      };
+      articleRequest.open('GET', `http://api.nytimes.com/svc/search/v2/articlesearch.json?q=${searchedForText}&api-key=bb606f840f8149b8947539122a93904f`);     
+      articleRequest.send();
     });
 
     function addImage() {
